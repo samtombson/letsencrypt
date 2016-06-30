@@ -8,7 +8,6 @@ case "$1" in
 		sld=`sed -E 's/(.*\.)*([^.]+)\..*/\2/' <<< "$2"`
 		tld=`sed -E 's/.*\.([^.]+)/\1/' <<< "$2"`
 		sub=`sed -E "s/$sld.$tld//" <<< "$2"`
-		echo $sub
 		records_list=`/usr/bin/curl -s "https://api.namecheap.com/xml.response?apiuser=$apiusr&apikey=$apikey&username=$apiusr&Command=namecheap.domains.dns.getHosts&ClientIp=$cliip&SLD=$sld&TLD=$tld" | sed -En 's/<host (.*)/\1/p'`
 		sethosts_uri="https://api.namecheap.com/xml.response?apiuser=$apiusr&apikey=$apikey&username=$apiusr&Command=namecheap.domains.dns.setHosts&ClientIp=$cliip&SLD=$sld&TLD=$tld"
 		if [[ "$1" = "clean_challenge" ]]
